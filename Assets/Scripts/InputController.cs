@@ -1,19 +1,23 @@
-﻿using System.Collections;
+﻿using System;
+using System.Collections;
 using UnityEngine;
+using UnityEngine.Events;
 
 public class InputController : MonoBehaviour
 {
 	public Controls Controls;
 	public static InputController Instance;
-	public PlayerMovement playerMovement;
 	private IEnumerator _playerIinputCR;
+	public Vector2Event OnPlayerMove = new Vector2Event();
+	public FloatEvent OnPlayerTurn = new FloatEvent();
+	public FloatEvent OnPlayerZoom = new FloatEvent();
 
 	private void OnEnable()
 	{
 		Controls = new Controls();
 		Instance = this;
-		if (playerMovement != null)
-			StartPlayerInputCR();
+		
+		StartPlayerInputCR();
 	}
 
 	private void StartPlayerInputCR()
@@ -33,13 +37,18 @@ public class InputController : MonoBehaviour
 
 	IEnumerator PlayerInputCR()
 	{
-		while (true)
+		while (Controls.Player.enabled)
 		{
 			yield return null;
-			playerMovement.Move(Controls.Player.Move.ReadValue<Vector2>());
+			OnPlayerMove.Invoke(Controls.Player.Move.ReadValue<Vector2>());
+			OnPlayerTurn.Invoke(Controls.Player.Turn.ReadValue<float>());
+			OnPlayerZoom.Invoke(Controls.Player.Zoom.ReadValue<float>());
 		}
+		_playerIinputCR = null;
 	}
-
-	public void EnablePlayerInput() => Controls.Player.Enable();
-	public void DisablePlayerInout() => Controls.Player.Disable();
 }
+
+[Serializable]
+public class Vector2Event : UnityEvent<Vector2> { }
+[Serializable]
+public class FloatEvent : UnityEvent<float> { }

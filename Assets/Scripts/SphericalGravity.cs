@@ -1,6 +1,5 @@
 ﻿using UnityEngine;
 
-[ExecuteAlways]
 [RequireComponent(typeof(Rigidbody))]
 public class SphericalGravity : MonoBehaviour, ISphereCoordinatesUser {
 	public bool preserveUp = true;
@@ -13,7 +12,8 @@ public class SphericalGravity : MonoBehaviour, ISphereCoordinatesUser {
 	{
 		rigidbody = GetComponent<Rigidbody>();
 		rigidbody.useGravity = false;
-		rigidbody.freezeRotation = true;
+		if (preserveUp)
+			rigidbody.freezeRotation = true;
 	}
 
 	private void FixedUpdate()
@@ -23,6 +23,7 @@ public class SphericalGravity : MonoBehaviour, ISphereCoordinatesUser {
 
 	private void LateUpdate()
 	{
-		transform.rotation = SphereCoordinates.GetForwardHorizontalRotation(transform);
+		if (preserveUp)
+			transform.rotation = SphereCoordinates.GetForwardHorizontalRotation(transform);
 	}
 }

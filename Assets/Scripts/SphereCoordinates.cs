@@ -3,6 +3,7 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
+[ExecuteAlways]
 public class SphereCoordinates : MonoBehaviour
 {
 	public float Radius = 1f;
@@ -20,6 +21,10 @@ public class SphereCoordinates : MonoBehaviour
 		InitUsers();
 	}
 
+	/// <summary>
+	/// Assign this instance to all children scripts implementing ISphereCoordinatesUser
+	/// </summary>
+	[ContextMenu("InitUsers")]
 	private void InitUsers()
 	{
 		foreach (var u in GetComponentsInChildren<ISphereCoordinatesUser>())
@@ -36,6 +41,6 @@ public class SphereCoordinates : MonoBehaviour
 	public Vector3 GetDown(Transform t) => GetDownRaw(t).normalized;
 	public Vector3 GetDownRaw(Transform t) => transform.position - t.position;
 
-	public Quaternion GetForwardHorizontalRotation(Transform t) => Quaternion.LookRotation(GetUpRaw(t), t.forward) * lookRotationfix;
-	public Quaternion GetForwardHorizontalRotation(Vector3 position, Vector3 forward) => Quaternion.LookRotation(GetUpRaw(position), forward) * lookRotationfix;
+	public Quaternion GetForwardHorizontalRotation(Transform t) => Quaternion.LookRotation(GetUpRaw(t), -t.forward) * lookRotationfix;
+	public Quaternion GetForwardHorizontalRotation(Vector3 position, Vector3 forward) => Quaternion.LookRotation(GetUpRaw(position), -forward) * lookRotationfix;
 }

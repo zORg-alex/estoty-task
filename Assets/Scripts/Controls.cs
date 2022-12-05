@@ -128,7 +128,7 @@ public partial class @Controls : IInputActionCollection2, IDisposable
                     ""name"": ""Turn"",
                     ""type"": ""Value"",
                     ""id"": ""3f538ef1-53d6-4f85-893b-ce7eb8425923"",
-                    ""expectedControlType"": ""Analog"",
+                    ""expectedControlType"": ""Delta"",
                     ""processors"": """",
                     ""interactions"": """",
                     ""initialStateCheck"": true
@@ -233,18 +233,40 @@ public partial class @Controls : IInputActionCollection2, IDisposable
                     ""isPartOfComposite"": true
                 },
                 {
-                    ""name"": """",
-                    ""id"": ""e6210455-a487-4050-a636-e85fcacf7db5"",
-                    ""path"": ""<Mouse>/delta/x"",
+                    ""name"": ""RightMBDrag"",
+                    ""id"": ""9f100902-a7d9-4c80-86ed-f897d357fcdc"",
+                    ""path"": ""OneModifier"",
+                    ""interactions"": """",
+                    ""processors"": """",
+                    ""groups"": """",
+                    ""action"": ""Turn"",
+                    ""isComposite"": true,
+                    ""isPartOfComposite"": false
+                },
+                {
+                    ""name"": ""modifier"",
+                    ""id"": ""ec5e1066-6d30-4db4-9afc-e18e855e6c67"",
+                    ""path"": ""<Mouse>/rightButton"",
                     ""interactions"": """",
                     ""processors"": """",
                     ""groups"": """",
                     ""action"": ""Turn"",
                     ""isComposite"": false,
-                    ""isPartOfComposite"": false
+                    ""isPartOfComposite"": true
                 },
                 {
-                    ""name"": ""1D Axis"",
+                    ""name"": ""binding"",
+                    ""id"": ""1dbc2df8-0ff0-4108-b60b-45e5a549825a"",
+                    ""path"": ""<Mouse>/delta/x"",
+                    ""interactions"": """",
+                    ""processors"": ""Scale(factor=-0.1),Clamp(min=-1,max=1)"",
+                    ""groups"": """",
+                    ""action"": ""Turn"",
+                    ""isComposite"": false,
+                    ""isPartOfComposite"": true
+                },
+                {
+                    ""name"": ""ZX"",
                     ""id"": ""dfa00ae6-aadc-407b-a791-dbad53dfd0dd"",
                     ""path"": ""1DAxis"",
                     ""interactions"": """",
