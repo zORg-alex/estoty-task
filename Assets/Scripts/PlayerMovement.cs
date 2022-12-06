@@ -5,10 +5,12 @@ using UnityEngine;
 [RequireComponent(typeof(Rigidbody))]
 public class PlayerMovement : MonoBehaviour, ISphereCoordinatesUser {
 	new Rigidbody rigidbody;
+	public Transform MoveAlongTarget;
 	public float movementMultiplier = 1f;
 	private float turningMultiplier = 1f;
-	public Transform MoveAlongTarget;
-	public float lerpSmoothingTurn = .05f;
+	public float lerpSmoothing = .05f;
+	private Vector3 moveVector;
+	private Vector3 allignedMoveVector;
 
 	public SphereCoordinates SphereCoordinates { get; set; }
 
@@ -19,24 +21,18 @@ public class PlayerMovement : MonoBehaviour, ISphereCoordinatesUser {
 
 	public void Move(Vector2 input)
 	{
-		Vector3 moveVector = new Vector3(input.x, 0, input.y).normalized * movementMultiplier;
-		if (MoveAlongTarget)
+		if (!MoveAlongTarget) { Debug.LogError("MoveAlongTarget missing"); return; }
+		//Convert input vector
+		var m = new Vector3(input.x, 0, input.y).normalized * movementMultiplier;
+		//Smooth it
+		moveVector = Vector3.Lerp(moveVector, m, lerpSmoothing);
+
+		allignedMoveVector = SphereCoordinates.GetForwardHorizontalRotation(transform.position, MoveAlongTarget.forward) * m;
+		if (allignedMoveVector.sqrMagnitude > .0001f)
 		{
-			moveVector = SphereCoordinates.GetForwardHorizontalRotation(transform.position, MoveAlongTarget.forward) * moveVector;
-			if (moveVector.sqrMagnitude > 0)
-			{
-				Quaternion rotation = Quaternion.LookRotation(moveVector, transform.up);
-				transform.rotation = Quaternion.Lerp(transform.rotation, rotation, lerpSmoothingTurn);
-			}
+			Quaternion rotation = Quaternion.LookRotation(allignedMoveVector, transform.up);
+			transform.rotation = Quaternion.Lerp(transform.rotation, rotation, lerpSmoothing);
+			rigidbody.MovePosition(transform.position + allignedMoveVector);
 		}
-		else
-			moveVector = transform.TransformVector(moveVector);
-		
-		rigidbody.MovePosition(transform.position + moveVector);
-	}
-	public void Turn(float input)
-	{
-		if (!MoveAlongTarget)
-			rigidbody.MoveRotation(transform.rotation * Quaternion.Euler(0, input * turningMultiplier, 0));
 	}
 }

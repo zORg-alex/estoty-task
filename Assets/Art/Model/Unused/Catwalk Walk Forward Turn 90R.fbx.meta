@@ -1,11 +1,11 @@
 fileFormatVersion: 2
-guid: 363b542aaa533e24dacd95efbf4768fa
+guid: f5c6d50b9a6112a43be4708f7ef0fc10
 ModelImporter:
   serializedVersion: 22200
   internalIDToNameTable:
   - first:
-      74: -5854809269975532381
-    second: left turn 90
+      74: 3614785712197184623
+    second: Catwalk Walk Forward Turn 90R
   externalObjects: {}
   materials:
     materialImportMode: 2
@@ -36,11 +36,11 @@ ModelImporter:
     extraUserProperties: []
     clipAnimations:
     - serializedVersion: 16
-      name: left turn 90
+      name: Catwalk Walk Forward Turn 90R
       takeName: mixamo.com
       internalID: 0
       firstFrame: 0
-      lastFrame: 28
+      lastFrame: 74
       wrapMode: 0
       orientationOffsetY: 0
       level: 0
