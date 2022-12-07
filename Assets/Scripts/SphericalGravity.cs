@@ -12,12 +12,11 @@ public class SphericalGravity : MonoBehaviour, ISphereCoordinatesUser {
 	{
 		rigidbody = GetComponent<Rigidbody>();
 		rigidbody.useGravity = false;
-		if (preserveUp)
-			rigidbody.freezeRotation = true;
 	}
 
 	private void FixedUpdate()
 	{
+		rigidbody.freezeRotation = preserveUp;
 		rigidbody.AddForce(SphereCoordinates.GetDown(transform) * 9.81f);
 	}
 
