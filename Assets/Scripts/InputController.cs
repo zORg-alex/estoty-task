@@ -11,8 +11,8 @@ public class InputController : MonoBehaviour
 	public Vector2Event OnPlayerMove = new Vector2Event();
 	public FloatEvent OnPlayerTurn = new FloatEvent();
 	public FloatEvent OnPlayerZoom = new FloatEvent();
-	public InputActionCallbackContextUnityEvent OnInteractPressed = new InputActionCallbackContextUnityEvent();
-	public InputActionCallbackContextUnityEvent OnInteractReleased = new InputActionCallbackContextUnityEvent();
+	public UnityEvent OnInteractPressed = new UnityEvent();
+	public UnityEvent OnInteractReleased = new UnityEvent();
 
 	private void OnEnable()
 	{
@@ -29,8 +29,8 @@ public class InputController : MonoBehaviour
 		Controls.Player.Interact.canceled -= Interact_released;
 	}
 
-	private void Interact_released(UnityEngine.InputSystem.InputAction.CallbackContext obj) => OnInteractReleased.Invoke(obj);
-	private void Interact_pressed(UnityEngine.InputSystem.InputAction.CallbackContext obj) => OnInteractPressed.Invoke(obj);
+	private void Interact_released(UnityEngine.InputSystem.InputAction.CallbackContext obj) => OnInteractReleased.Invoke();
+	private void Interact_pressed(UnityEngine.InputSystem.InputAction.CallbackContext obj) => OnInteractPressed.Invoke();
 
 	private void StartPlayerInputCR()
 	{

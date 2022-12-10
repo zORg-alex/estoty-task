@@ -6,4 +6,9 @@ public class InteractableReciever : MonoBehaviour, IInteractable
 	{
 
 	}
+
+	public void InteractionFinished(IInteractor interactor)
+	{
+
+	}
 }

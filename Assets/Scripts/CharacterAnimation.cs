@@ -6,17 +6,15 @@ using UnityEngine;
 [RequireComponent(typeof(PlayerMovement))]
 public class CharacterAnimation : MonoBehaviour
 {
-	private Vector3 oldForward = Vector3.forward;
-	Quaternion oldRotation;
-	Vector3 oldPosition;
-	public bool isMoving;
-	private float turnValue;
 	private PlayerMovement pm;
 	public Animator Animator;
 	private int SpeedHash;
 	private int TurnHash;
-	public float turnAbsThreshold = 1;
-	public float moveMax = 1.5f;
+	public float TurnAbsThreshold = 1;
+	public float MoveMax = 1.5f;
+	private float fdot;
+	private float rdot;
+	public float LerpSmoothing = .05f;
 
 	private void OnEnable()
 	{
@@ -28,10 +26,13 @@ public class CharacterAnimation : MonoBehaviour
 	public void Update()
 	{
 		var targetDirection = pm.TargetDirection;
-		var fdot = Mathf.Clamp01( Vector3.Dot(targetDirection, transform.forward));
-		var rdot = Vector3.Dot(targetDirection, transform.right);
-		Animator.SetFloat(SpeedHash, fdot * moveMax);
-		Animator.SetFloat(TurnHash, rdot * turnAbsThreshold);
+
+		float newFDot = Mathf.Clamp01(Vector3.Dot(targetDirection, transform.forward));
+		fdot = Mathf.Abs(fdot - newFDot) > .01f ? Mathf.Lerp(fdot, newFDot, LerpSmoothing) : newFDot;
+		Animator.SetFloat(SpeedHash, fdot * MoveMax);
+
+		rdot = Vector3.Dot(targetDirection, transform.right);
+		Animator.SetFloat(TurnHash, rdot * TurnAbsThreshold);
 
 	}
 }

@@ -25,4 +25,12 @@ public class SphericalGravity : MonoBehaviour, ISphereCoordinatesUser {
 		if (preserveUp)
 			transform.rotation = SphereCoordinates.GetForwardHorizontalRotation(transform);
 	}
+
+#if UNITY_EDITOR
+	[ContextMenu("ApplyRotation")]
+	public void ApplyRotation()
+	{
+		LateUpdate();
+	}
+#endif
 }

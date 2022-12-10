@@ -31,7 +31,7 @@ public class PlayerMovement : MonoBehaviour, ISphereCoordinatesUser {
 		{
 			Quaternion rotation = Quaternion.LookRotation(allignedMoveVector, transform.up);
 			transform.rotation = Quaternion.Lerp(transform.rotation, rotation, lerpSmoothing);
-			rigidbody.MovePosition(transform.position + allignedMoveVector);
+			rigidbody.MovePosition(transform.position + allignedMoveVector * Time.deltaTime);
 		}
 	}
 

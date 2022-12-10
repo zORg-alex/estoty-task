@@ -25,11 +25,13 @@ public class ZoomToTarget : MonoBehaviour
 	public void Zoom(float zoomDelta)
 	{
 		zoomValue = Mathf.Clamp(zoomValue + zoomDelta * zoomMultiplier, minZoom, maxZoom);
+	}
+	private void Update()
+	{
 		if (target)
 		{
 			var zoom = Mathf.Lerp((transform.position - target.position).magnitude, zoomValue, lerpSmoothing);
-			transform.position = target.position + transform.TransformVector(initialRelativePosition * zoom);
-
+			transform.position = Vector3.Lerp(transform.position, target.position + transform.TransformVector(initialRelativePosition * zoom), lerpSmoothing);
 		}
 	}
 }
