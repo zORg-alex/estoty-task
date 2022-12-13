@@ -18,9 +18,9 @@ MonoBehaviour:
   uiBounds:
     serializedVersion: 2
     x: -883
-    y: -882
-    width: 2754
-    height: 2202
+    y: -701
+    width: 3048
+    height: 2021
 --- !u!114 &114350483966674976
 MonoBehaviour:
   m_ObjectHideFlags: 1
@@ -1438,8 +1438,6 @@ MonoBehaviour:
   m_OutputFlowSlot:
   - link:
     - context: {fileID: 8926484042661614555}
-      slotIndex: 0
-    - context: {fileID: 8926484042661615043}
       slotIndex: 0
   eventName: StartParticles
 --- !u!114 &8926484042661614607
@@ -7426,7 +7424,7 @@ MonoBehaviour:
   m_Parent: {fileID: 114350483966674976}
   m_Children:
   - {fileID: 8926484042661615179}
-  m_UIPosition: {x: 1447, y: -882}
+  m_UIPosition: {x: 1741, y: -649}
   m_UICollapsed: 0
   m_UISuperCollapsed: 0
   m_InputSlots:
@@ -7436,9 +7434,7 @@ MonoBehaviour:
   m_Label: 
   m_Data: {fileID: 8926484042661615057}
   m_InputFlowSlot:
-  - link:
-    - context: {fileID: 8926484042661614606}
-      slotIndex: 0
+  - link: []
   m_OutputFlowSlot:
   - link:
     - context: {fileID: 8926484042661615058}
@@ -7929,7 +7925,7 @@ MonoBehaviour:
   m_UIIgnoredErrors: []
   m_Parent: {fileID: 114350483966674976}
   m_Children: []
-  m_UIPosition: {x: 1447, y: -461}
+  m_UIPosition: {x: 1741, y: -228}
   m_UICollapsed: 0
   m_UISuperCollapsed: 0
   m_InputSlots:
@@ -10537,7 +10533,7 @@ MonoBehaviour:
   m_UIIgnoredErrors: []
   m_Parent: {fileID: 8926484042661615043}
   m_Children: []
-  m_UIPosition: {x: 0, y: 0}
+  m_UIPosition: {x: 0, y: 2}
   m_UICollapsed: 0
   m_UISuperCollapsed: 0
   m_InputSlots:
