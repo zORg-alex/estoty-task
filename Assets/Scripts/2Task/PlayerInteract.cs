@@ -7,7 +7,6 @@ using UnityEngine.Events;
 public class PlayerInteract : Interactor
 {
 	public Transform receiverTarget;
-	private IEnumerator _snapTargetCR;
 
 	public override void InteractStarted()
 	{

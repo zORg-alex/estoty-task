@@ -7,14 +7,7 @@ using UnityEngine;
 public class SphereCoordinates : MonoBehaviour
 {
 	public float Radius = 1f;
-	private Matrix4x4 worldToLocalMatrix;
-	private Quaternion lookRotationfix;
-
-	private void OnEnable()
-	{
-		worldToLocalMatrix = transform.worldToLocalMatrix;
-		lookRotationfix = Quaternion.Euler(90, 0, 0);
-	}
+	private static readonly Quaternion lookRotationfix = Quaternion.Euler(90, 0, 0);
 
 	private void Start()
 	{

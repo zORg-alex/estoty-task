@@ -8,7 +8,7 @@ public class Interactor : MonoBehaviour, IInteractor
 {
 	public UnityEvent OnInteractionAvailable = new UnityEvent();
 	public UnityEvent OnNothingToInteract = new UnityEvent();
-	public List<IInteractable> interactables = new List<IInteractable>();
+	protected List<IInteractable> interactables = new List<IInteractable>();
 	protected IInteractable interactedWith;
 
 	//Appears that UnityEvents can't be Invoked outside of Update call;

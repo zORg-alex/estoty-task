@@ -2,36 +2,36 @@
 
 public class ZoomToTarget : MonoBehaviour
 {
-	public Transform target;
-	public float zoomValue;
-	public float zoomMultiplier = .1f;
-	public float minZoom = 1f;
-	public float maxZoom = 10f;
-	public float lerpSmoothing = .05f;
-	public Vector3 initialRelativePosition;
+	public Transform Target;
+	public float ZoomValue;
+	public float ZoomMultiplier = .1f;
+	public float MinZoom = 1f;
+	public float MaxZoom = 10f;
+	public float LerpSmoothing = .05f;
+	public Vector3 InitialRelativePosition;
 
 	[ContextMenu("SetInitialPosition")]
 	void SetInitialPosition()
 	{
-		initialRelativePosition = transform.InverseTransformVector(transform.position - target.position).normalized;
+		InitialRelativePosition = transform.InverseTransformVector(transform.position - Target.position).normalized;
 	}
 	[ContextMenu("ResetPosition")]
 	void ResetPosition()
 	{
-		transform.position = target.position + transform.TransformVector(initialRelativePosition);
-		zoomValue = initialRelativePosition.magnitude;
+		transform.position = Target.position + transform.TransformVector(InitialRelativePosition);
+		ZoomValue = InitialRelativePosition.magnitude;
 	}
 
 	public void Zoom(float zoomDelta)
 	{
-		zoomValue = Mathf.Clamp(zoomValue + zoomDelta * zoomMultiplier, minZoom, maxZoom);
+		ZoomValue = Mathf.Clamp(ZoomValue + zoomDelta * ZoomMultiplier, MinZoom, MaxZoom);
 	}
 	private void Update()
 	{
-		if (target)
+		if (Target)
 		{
-			var zoom = Mathf.Lerp((transform.position - target.position).magnitude, zoomValue, lerpSmoothing);
-			transform.position = Vector3.Lerp(transform.position, target.position + transform.TransformVector(initialRelativePosition * zoom), lerpSmoothing);
+			var zoom = Mathf.Lerp((transform.position - Target.position).magnitude, ZoomValue, LerpSmoothing);
+			transform.position = Vector3.Lerp(transform.position, Target.position + transform.TransformVector(InitialRelativePosition * zoom), LerpSmoothing);
 		}
 	}
 }

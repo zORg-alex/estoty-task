@@ -64,5 +64,3 @@ public class InputController : MonoBehaviour
 public class Vector2Event : UnityEvent<Vector2> { }
 [Serializable]
 public class FloatEvent : UnityEvent<float> { }
-[Serializable]
-public class InputActionCallbackContextUnityEvent : UnityEvent<UnityEngine.InputSystem.InputAction.CallbackContext> { }
