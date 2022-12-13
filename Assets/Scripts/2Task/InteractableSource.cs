@@ -16,7 +16,7 @@ public class InteractableSource : MonoBehaviour, IInteractable
 		if (interactor.gameObject.GetComponent<PlayerInteract>() is PlayerInteract playerInteract)
 		{
 			Transfer.StartParticles();
-			_snapTargetCR = Transfer.SnapTarget(playerInteract.receiverTarget);
+			_snapTargetCR = Transfer.Snap(null, playerInteract.receiverTarget);
 			StartCoroutine(_snapTargetCR);
 		}
 	}
