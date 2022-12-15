@@ -1,6 +1,4 @@
-﻿using System;
-using System.Drawing;
-using Unity.Burst;
+﻿using Unity.Burst;
 using Unity.Collections;
 using Unity.Entities;
 using Unity.Mathematics;
@@ -22,7 +20,7 @@ namespace Assets.Scripts.Task3
 		[BurstCompile]
 		public void OnDestroy(ref SystemState state)
 		{
-
+			spawned = false;
 		}
 
 		[BurstCompile]
@@ -50,7 +48,7 @@ namespace Assets.Scripts.Task3
 					for (int k = 0; k < spawnerAspect.Size.x; k++)
 					{
 						var entity = ecb.Instantiate(spawnerAspect.Prefab);
-						ecb.SetComponent(entity, spawnerAspect.GetLocalTransform(i,j,k, offset));
+						ecb.SetComponent(entity, GetLocalTransform(i, j, k, offset, .5f));
 						ecb.SetComponent(entity, new SphereData { InitialPosition = new float3(i, j, k) });
 					}
 			ecb.Playback(state.EntityManager);
@@ -63,5 +61,12 @@ namespace Assets.Scripts.Task3
 				s.SetRandomColor();
 			}
 		}
+
+		public LocalTransform GetLocalTransform(float x, float y, float z, float3 offset, float scale) =>
+			new LocalTransform() {
+				Position = offset + new float3(x, y, z),
+				Rotation = quaternion.identity,
+				Scale = scale
+			};
 	}
 }

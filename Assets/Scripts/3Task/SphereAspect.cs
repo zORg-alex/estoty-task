@@ -27,7 +27,6 @@ namespace Assets.Scripts.Task3
 		public void SetRandomColor()
 		{
 			var t = Time.time;
-			//Color = new float4(t % 1, 1 - t % 1, 0, 1);
 
 			Color = new float4(.3f, noise.pnoise(InitialPosition/5f + t /5f, 15f), .7f, 1);
 		}

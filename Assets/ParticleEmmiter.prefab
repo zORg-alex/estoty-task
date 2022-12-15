@@ -44,8 +44,8 @@ GameObject:
   - component: {fileID: 7837972387479081064}
   - component: {fileID: 7837972387479081065}
   - component: {fileID: 7837972387479081070}
-  - component: {fileID: 2172377514245873174}
   - component: {fileID: 5110944893250118639}
+  - component: {fileID: 2172377514245873174}
   m_Layer: 0
   m_Name: ParticleEmmiter
   m_TagString: Untagged
@@ -198,20 +198,6 @@ MonoBehaviour:
   m_Property:
     m_Name: TargetTransform
   Target: {fileID: 7837972386704781563}
---- !u!114 &2172377514245873174
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 7837972387479081068}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: bc3fca8074f42274ba5f720812a3bee8, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  target: {fileID: 7837972386704781563}
-  source: {fileID: 4989072986802955873}
 --- !u!114 &5110944893250118639
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -227,6 +213,20 @@ MonoBehaviour:
   m_Property:
     m_Name: SourceTransform
   Target: {fileID: 4989072986802955873}
+--- !u!114 &2172377514245873174
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 7837972387479081068}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: bc3fca8074f42274ba5f720812a3bee8, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  target: {fileID: 7837972386704781563}
+  source: {fileID: 4989072986802955873}
 --- !u!1 &7868006458178163752
 GameObject:
   m_ObjectHideFlags: 0
