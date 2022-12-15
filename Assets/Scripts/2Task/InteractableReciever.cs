@@ -3,7 +3,6 @@ using UnityEngine;
 
 public class InteractableReciever : MonoBehaviour, IInteractable
 {
-	public float transferRate = 10f;
 	public ResourceTransferScript Transfer;
 	private IEnumerator _snapTargetCR;
 

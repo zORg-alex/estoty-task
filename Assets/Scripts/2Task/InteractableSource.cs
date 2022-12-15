@@ -5,7 +5,6 @@ using UnityEngine;
 
 public class InteractableSource : MonoBehaviour, IInteractable
 {
-	public float TransferRate = 10f;
 	public ResourceTransferScript Transfer;
 	private IEnumerator _snapTargetCR;
 	public float StopDelay = .7f;
@@ -23,14 +22,14 @@ public class InteractableSource : MonoBehaviour, IInteractable
 	}
 	public void InteractionFinished(IInteractor interactor)
 	{
-		StartCoroutine(DelayedStop());
+		StartCoroutine(DelayedStop(StopDelay));
 		if (!Transfer) return;
 		Transfer.StopParticles();
 	}
 
-	IEnumerator DelayedStop()
+	IEnumerator DelayedStop(float delay)
 	{
-		yield return new WaitForSeconds(StopDelay);
+		yield return new WaitForSeconds(delay);
 		StopCoroutine(_snapTargetCR);
 		_snapTargetCR = null;
 	}
