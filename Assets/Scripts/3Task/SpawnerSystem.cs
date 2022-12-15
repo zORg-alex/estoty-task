@@ -1,4 +1,5 @@
 ﻿using System;
+using System.Drawing;
 using Unity.Burst;
 using Unity.Collections;
 using Unity.Entities;
@@ -12,19 +13,19 @@ namespace Assets.Scripts.Task3
 	public partial struct SpawnerSystem : ISystem
 	{
 		private bool spawned;
-		//[BurstCompile]
+		[BurstCompile]
 		public void OnCreate(ref SystemState state)
 		{
 			state.RequireForUpdate<SpawnerData>();
 		}
 
-		//[BurstCompile]
+		[BurstCompile]
 		public void OnDestroy(ref SystemState state)
 		{
 
 		}
 
-		//[BurstCompile]
+		[BurstCompile]
 		public void OnUpdate(ref SystemState state)
 		{
 			if (!spawned)
@@ -34,20 +35,33 @@ namespace Assets.Scripts.Task3
 				SpawnPrefabs(state, spawnerAspect);
 				spawned = true;
 			}
+			else
+			{
+				AnimateColors(state);
+			}
 		}
 
 		private void SpawnPrefabs(SystemState state, SpawnerAspect spawnerAspect)
 		{
+			var offset = spawnerAspect.Position - spawnerAspect.Size / 2;
 			var ecb = new EntityCommandBuffer(Allocator.Temp);
 			for (int i = 0; i < spawnerAspect.Size.x; i++)
 				for (int j = 0; j < spawnerAspect.Size.x; j++)
 					for (int k = 0; k < spawnerAspect.Size.x; k++)
 					{
 						var entity = ecb.Instantiate(spawnerAspect.Prefab);
-						ecb.SetComponent(entity, spawnerAspect.GetLocalTransform(i,j,k));
+						ecb.SetComponent(entity, spawnerAspect.GetLocalTransform(i,j,k, offset));
 						ecb.SetComponent(entity, new SphereData { InitialPosition = new float3(i, j, k) });
 					}
 			ecb.Playback(state.EntityManager);
+		}
+
+		private void AnimateColors(SystemState state)
+		{
+			foreach (var s in SystemAPI.Query<SphereAspect>())
+			{
+				s.SetRandomColor();
+			}
 		}
 	}
 }

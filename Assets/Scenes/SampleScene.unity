@@ -684,7 +684,7 @@ Transform:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 562229170}
   m_LocalRotation: {x: -0.049969185, y: 0.010439515, z: 0.013895632, w: 0.9985995}
-  m_LocalPosition: {x: -0.17, y: 2.4362, z: -0.335}
+  m_LocalPosition: {x: -0.171, y: 2.463, z: -0.338}
   m_LocalScale: {x: 0.054246, y: 0.068279445, z: 0.054246}
   m_ConstrainProportionsScale: 0
   m_Children:
@@ -735,7 +735,7 @@ MeshRenderer:
   m_RenderingLayerMask: 1
   m_RendererPriority: 0
   m_Materials:
-  - {fileID: 2100000, guid: 31321ba15b8f8eb4c954353edc038b1d, type: 2}
+  - {fileID: 2100000, guid: 70037ba38a356114fb1c442bc0147977, type: 2}
   m_StaticBatchInfo:
     firstSubMesh: 0
     subMeshCount: 0
@@ -966,17 +966,17 @@ PrefabInstance:
     - target: {fileID: 7837972387479081067, guid: 37183ebc9d1b95b48a5e2ee7937d3d7a,
         type: 3}
       propertyPath: m_PropertySheet.m_Vector3f.m_Array.Array.data[1].m_Value.x
-      value: -0.17224142
+      value: -0.17324142
       objectReference: {fileID: 0}
     - target: {fileID: 7837972387479081067, guid: 37183ebc9d1b95b48a5e2ee7937d3d7a,
         type: 3}
       propertyPath: m_PropertySheet.m_Vector3f.m_Array.Array.data[1].m_Value.y
-      value: 2.5136197
+      value: 2.5404198
       objectReference: {fileID: 0}
     - target: {fileID: 7837972387479081067, guid: 37183ebc9d1b95b48a5e2ee7937d3d7a,
         type: 3}
       propertyPath: m_PropertySheet.m_Vector3f.m_Array.Array.data[1].m_Value.z
-      value: -0.3427456
+      value: -0.3457456
       objectReference: {fileID: 0}
     - target: {fileID: 7837972387479081067, guid: 37183ebc9d1b95b48a5e2ee7937d3d7a,
         type: 3}
@@ -996,17 +996,17 @@ PrefabInstance:
     - target: {fileID: 7837972387479081067, guid: 37183ebc9d1b95b48a5e2ee7937d3d7a,
         type: 3}
       propertyPath: m_PropertySheet.m_Vector3f.m_Array.Array.data[4].m_Value.x
-      value: -0.21592316
+      value: -0.21692316
       objectReference: {fileID: 0}
     - target: {fileID: 7837972387479081067, guid: 37183ebc9d1b95b48a5e2ee7937d3d7a,
         type: 3}
       propertyPath: m_PropertySheet.m_Vector3f.m_Array.Array.data[4].m_Value.y
-      value: 2.5302763
+      value: 2.5570765
       objectReference: {fileID: 0}
     - target: {fileID: 7837972387479081067, guid: 37183ebc9d1b95b48a5e2ee7937d3d7a,
         type: 3}
       propertyPath: m_PropertySheet.m_Vector3f.m_Array.Array.data[4].m_Value.z
-      value: -0.16361724
+      value: -0.16661723
       objectReference: {fileID: 0}
     - target: {fileID: 7837972387479081068, guid: 37183ebc9d1b95b48a5e2ee7937d3d7a,
         type: 3}
@@ -1303,7 +1303,7 @@ MeshRenderer:
   m_RenderingLayerMask: 1
   m_RendererPriority: 0
   m_Materials:
-  - {fileID: 2100000, guid: 31321ba15b8f8eb4c954353edc038b1d, type: 2}
+  - {fileID: 2100000, guid: 70037ba38a356114fb1c442bc0147977, type: 2}
   m_StaticBatchInfo:
     firstSubMesh: 0
     subMeshCount: 0
@@ -1774,7 +1774,7 @@ Camera:
     y: 0
     width: 1
     height: 1
-  near clip plane: 0.3
+  near clip plane: 0.05
   far clip plane: 1000
   field of view: 60
   orthographic: 0
@@ -2199,7 +2199,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   MoveAlongTarget: {fileID: 2057936091}
   MovementMultiplier: 1
-  LerpSmoothing: 0.08
+  LerpSmoothing: 0.15
 --- !u!114 &1383652810
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -2214,8 +2214,8 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   Animator: {fileID: 1378105773}
   TurnAbsThreshold: 1
-  MoveMax: 3
-  LerpSmoothing: 0.05
+  MoveMax: 4
+  LerpSmoothing: 0.2
 --- !u!114 &1383652811
 MonoBehaviour:
   m_ObjectHideFlags: 0
