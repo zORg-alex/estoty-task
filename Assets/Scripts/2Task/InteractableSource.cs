@@ -5,11 +5,12 @@ using UnityEngine;
 
 public class InteractableSource : MonoBehaviour, IInteractable
 {
-	public float transferRate = 10f;
+	public float TransferRate = 10f;
 	public ResourceTransferScript Transfer;
 	private IEnumerator _snapTargetCR;
+	public float StopDelay = .7f;
 
-	public void Interact(IInteractor interactor)
+	public void InteractionStarted(IInteractor interactor)
 	{
 		if (!Transfer) return;
 		if (_snapTargetCR != null) StopCoroutine(_snapTargetCR);
@@ -22,9 +23,15 @@ public class InteractableSource : MonoBehaviour, IInteractable
 	}
 	public void InteractionFinished(IInteractor interactor)
 	{
-		StopCoroutine(_snapTargetCR);
-		_snapTargetCR = null;
+		StartCoroutine(DelayedStop());
 		if (!Transfer) return;
 		Transfer.StopParticles();
+	}
+
+	IEnumerator DelayedStop()
+	{
+		yield return new WaitForSeconds(StopDelay);
+		StopCoroutine(_snapTargetCR);
+		_snapTargetCR = null;
 	}
 }

@@ -7,7 +7,7 @@ public class InteractableReciever : MonoBehaviour, IInteractable
 	public ResourceTransferScript Transfer;
 	private IEnumerator _snapTargetCR;
 
-	public void Interact(IInteractor interactor)
+	public void InteractionStarted(IInteractor interactor)
 	{
 		if (!Transfer) return;
 		if (_snapTargetCR != null) StopCoroutine(_snapTargetCR);

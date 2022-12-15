@@ -1,5 +1,5 @@
 ﻿public interface IInteractable
 {
-	void Interact(IInteractor interactor);
+	void InteractionStarted(IInteractor interactor);
 	void InteractionFinished(IInteractor interactor);
 }

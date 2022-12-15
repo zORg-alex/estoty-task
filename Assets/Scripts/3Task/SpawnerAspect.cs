@@ -18,6 +18,6 @@ namespace Assets.Scripts.Task3
 
 		public Entity Prefab => Spawner.ValueRO.Prefab;
 
-		public LocalTransform GetLocalTransform(float x, float y, float z, float3 offset) => new LocalTransform() { Position = offset + new float3(x,y,z), Rotation = quaternion.identity, Scale = .3f };
+		public LocalTransform GetLocalTransform(float x, float y, float z, float3 offset) => new LocalTransform() { Position = offset + new float3(x,y,z), Rotation = quaternion.identity, Scale = .5f };
 	}
 }

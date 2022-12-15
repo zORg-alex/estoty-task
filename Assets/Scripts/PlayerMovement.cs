@@ -26,7 +26,7 @@ public class PlayerMovement : MonoBehaviour, ISphereCoordinatesUser {
 		//Smooth it
 		moveVector = Vector3.Lerp(moveVector, m, LerpSmoothing);
 
-		allignedMoveVector = SphereCoordinates.GetForwardHorizontalRotation(transform.position, MoveAlongTarget.forward) * m;
+		allignedMoveVector = SphereCoordinates.GetForwardHorizontalRotation(transform.position, MoveAlongTarget.forward) * moveVector;
 		if (allignedMoveVector.sqrMagnitude > .00001f)
 		{
 			Quaternion rotation = Quaternion.LookRotation(allignedMoveVector, transform.up);

@@ -15,22 +15,27 @@ public class CharacterAnimation : MonoBehaviour
 	public float LerpSmoothing = .05f;
 	private float fdot;
 	private float rdot;
+	private Vector3 lastPos;
+	public float maxSpeed;
 
 	private void OnEnable()
 	{
 		pm = GetComponent<PlayerMovement>();
+		lastPos = transform.position;
 	}
 
 	public void Update()
 	{
 		var targetDirection = pm.TargetDirection;
 
+		var normalizedDifference = (transform.position - lastPos).magnitude / maxSpeed;
 		float newFDot = Mathf.Clamp01(Vector3.Dot(targetDirection, transform.forward));
-		fdot = Mathf.Abs(fdot - newFDot) > .01f ? Mathf.Lerp(fdot, newFDot, LerpSmoothing) : newFDot;
+		fdot = Mathf.Abs(fdot - newFDot) > .01f ? Mathf.Lerp(fdot, newFDot * normalizedDifference, LerpSmoothing) : newFDot;
 		Animator.SetFloat(speedHash, fdot * MoveMax);
 
 		rdot = Vector3.Dot(targetDirection, transform.right);
 		Animator.SetFloat(turnHash, rdot * TurnAbsThreshold);
 
+		lastPos = transform.position;
 	}
 }

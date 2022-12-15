@@ -45,7 +45,7 @@ public class Interactor : MonoBehaviour, IInteractor
 	public virtual void InteractStarted()
 	{
 		interactedWith = interactables.LastOrDefault();
-		interactedWith?.Interact(this);
+		interactedWith?.InteractionStarted(this);
 	}
 
 	public virtual void InteractionFinished()
