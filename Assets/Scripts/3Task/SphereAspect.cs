@@ -10,7 +10,7 @@ namespace Assets.Scripts.Task3
 	readonly partial struct SphereAspect : IAspect
 	{
 		public readonly Entity Self;
-		readonly TransformAspect Transform;
+		readonly RefRO<LocalTransform> Transform;
 		readonly RefRO<SphereData> Sphere;
 		readonly RefRW<URPMaterialPropertyBaseColor> BaseColor;
 		readonly RefRW<URPMaterialPropertyEmissionColor> EmissionColor;

@@ -29,7 +29,7 @@ namespace Assets.Scripts.Task3
 			if (!spawned)
 			{
 				var spawner = SystemAPI.GetSingletonEntity<SpawnerData>();
-				var spawnerAspect = SystemAPI.GetAspectRO<SpawnerAspect>(spawner);
+				var spawnerAspect = SystemAPI.GetAspect<SpawnerAspect>(spawner);
 				SpawnPrefabs(state, spawnerAspect);
 				spawned = true;
 			}

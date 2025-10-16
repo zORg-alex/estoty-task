@@ -8,11 +8,11 @@ namespace Assets.Scripts.Task3
 	readonly partial struct SpawnerAspect : IAspect
 	{
 		public readonly Entity Self;
-		readonly TransformAspect Transform;
+		readonly RefRO<LocalTransform> Transform;
 		readonly RefRO<SpawnerData> Spawner;
 
-		public float3 Position => Transform.WorldPosition;
-		public quaternion Rotation => Transform.WorldRotation;
+		public float3 Position => Transform.ValueRO.Position;
+		public quaternion Rotation => Transform.ValueRO.Rotation;
 
 		public int3 Size => Spawner.ValueRO.Size;
 
