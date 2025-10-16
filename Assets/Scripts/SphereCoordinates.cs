@@ -33,7 +33,25 @@ public class SphereCoordinates : MonoBehaviour
 
 	public Vector3 GetDown(Transform t) => GetDownRaw(t).normalized;
 	public Vector3 GetDownRaw(Transform t) => transform.position - t.position;
-
+	
 	public Quaternion GetForwardHorizontalRotation(Transform t) => Quaternion.LookRotation(GetUpRaw(t), -t.forward) * lookRotationfix;
 	public Quaternion GetForwardHorizontalRotation(Vector3 position, Vector3 forward) => Quaternion.LookRotation(GetUpRaw(position), -forward) * lookRotationfix;
+
+	public Vector3 CalculateCurvedHorizontalVector(Vector3 pos, Vector3 vector)
+	{
+		Vector3 center = transform.position;
+		Vector3 currentLocal = pos - center;
+		float distToCenter = currentLocal.magnitude;
+		Vector3 up = currentLocal.normalized;
+		var projectedVector = Vector3.ProjectOnPlane(vector, up);
+		var normalizedTangent = projectedVector.normalized;
+		var right = Vector3.Cross(up, normalizedTangent);
+
+		var angleRad = projectedVector.magnitude / distToCenter;
+		var angleDeg = angleRad * Mathf.Rad2Deg;
+
+		var rotationAround = Quaternion.AngleAxis(angleDeg, right);
+		var local = rotationAround * currentLocal;
+		return center + local - pos;
+	}
 }

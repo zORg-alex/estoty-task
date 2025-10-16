@@ -27,6 +27,10 @@ public class InputController : MonoBehaviour
 	{
 		Controls.Player.Interact.started -= Interact_pressed;
 		Controls.Player.Interact.canceled -= Interact_released;
+		
+		Controls.Disable();
+		Controls.Dispose();
+		Controls = null;
 	}
 
 	private void Interact_released(UnityEngine.InputSystem.InputAction.CallbackContext obj) => OnInteractReleased.Invoke();

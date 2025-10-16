@@ -30,7 +30,8 @@ public class InteractableSource : MonoBehaviour, IInteractable
 	IEnumerator DelayedStop(float delay)
 	{
 		yield return new WaitForSeconds(delay);
-		StopCoroutine(_snapTargetCR);
+		if (_snapTargetCR != null)
+			StopCoroutine(_snapTargetCR);
 		_snapTargetCR = null;
 	}
 }
