@@ -37,12 +37,10 @@ public class GridController : MonoBehaviour
         {
             var t = transform.GetChild(i);
             if (t.TryGetComponent(out Hole h))
-                _holes.Add(new(h.gameObject, t, h));
+                _holes.Add(new(h.gameObject, t, h, CalculateFromPosition(t)));
             else
-                _hexes.Add(new(t.gameObject, t));
+                _hexes.Add(new(t.gameObject, t, CalculateFromPosition(t)));
         }
-
-        Generate();
     }
 
     [Button]
@@ -120,8 +118,8 @@ public class GridController : MonoBehaviour
         var pos = Vector2Int.zero;
         do
         {
-            pos = new(Random.Range(0, gridSize.x), Random.Range(0, gridSize.y));
-        } while (pos != h.Position && !_holes.Exists(x => x.Position == pos));
+            pos = new(Random.Range(1, gridSize.x - 1), Random.Range(1, gridSize.y - 1));
+        } while (pos == h.Position || _holes.Exists(x => x.Position == pos));
 
         if (_hexes.TryFind(x => x.Position == pos, out var hex, out var hexInd))
         {
@@ -133,7 +131,15 @@ public class GridController : MonoBehaviour
     }
 
     private void Position(Transform transform, Vector2Int ind) => transform.localPosition =
-        new(-(float)gridSize.x / 2 + ind.x + (ind.y % 2 > 0 ? .5f : 0) * cellOffset.x, 0, ind.y * cellOffset.y);
+        new((-(float)gridSize.x / 2 + ind.x + (ind.y % 2 > 0 ? .5f : 0)) * cellOffset.x, 0, ind.y * cellOffset.y);
+
+    private Vector2Int CalculateFromPosition(Transform transform)
+    {
+        var pos = transform.localPosition;
+        var y = Mathf.RoundToInt( pos.z / cellOffset.y);
+        var x = Mathf.RoundToInt(pos.x / cellOffset.x - (y % 2 > 0 ? .5f : 0f) + (float)gridSize.x / 2);
+        return new Vector2Int(x , y);
+    }
 
     public struct HexCache : IHexCache
     {
@@ -146,6 +152,13 @@ public class GridController : MonoBehaviour
             GameObject =  gameObject;
             Transform =  transform;
             Position = -Vector2Int.one;
+        }
+
+        public HexCache(GameObject gameObject, Transform transform, Vector2Int position)
+        {
+            GameObject =  gameObject;
+            Transform =  transform;
+            Position = position;
         }
 
         public HexCache WithPosition(Vector2Int position)
@@ -168,7 +181,15 @@ public class GridController : MonoBehaviour
             Position = -Vector2Int.one;
             Hole = hole;
         }
-        
+
+        public HoleCache(GameObject gameObject, Transform transform, Hole hole, Vector2Int position)
+        {
+            GameObject =  gameObject;
+            Transform =  transform;
+            Position = position;
+            Hole = hole;
+        }
+
         public HoleCache WithPosition(Vector2Int position)
         {
             Position = position;
