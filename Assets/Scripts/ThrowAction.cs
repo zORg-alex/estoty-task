@@ -6,7 +6,7 @@ using UnityEngine;
 using UnityEngine.Events;
 using UnityEngine.InputSystem;
 
-public class ThrowController : MonoBehaviour
+public class ThrowAction : MonoBehaviour
 {
     [Serializable]
     public class ThrowEvent : UnityEvent<Vector2> { }
@@ -17,8 +17,6 @@ public class ThrowController : MonoBehaviour
     [SerializeField] private ThrowEvent onThrow = new ();
     public event UnityAction<Vector2> OnThrow { add => onThrow.AddListener(value); remove => onThrow.RemoveListener(value); }
     
-    private Coroutine _udpateCR;
-
     private void Start() => Initialize();
     private void Initialize()
     {
@@ -28,7 +26,7 @@ public class ThrowController : MonoBehaviour
     {
         this.OnAssemblyReload(Initialize);
 
-        _udpateCR = StartCoroutine(UpdateCR());
+        StartCoroutine(UpdateCR());
     }
 
     private IEnumerator UpdateCR()
