@@ -6,6 +6,7 @@ using UnityEngine;
 using UnityEngine.Events;
 using UnityEngine.InputSystem;
 
+[DeclareFoldoutGroup("ev", Title = "Events")]
 public class ThrowAction : MonoBehaviour
 {
     [Serializable]
@@ -14,9 +15,9 @@ public class ThrowAction : MonoBehaviour
     [SerializeField, Required] private InputActionReference throwStick;
     [SerializeField] private float engageThreshold = 0.1f; // magnitude considered "pressed"
     [SerializeField] private float zeroSpeedThreshold = .5f; // speed (units/sec) toward zero considered "fast" (onscreen)
-    [SerializeField] private ThrowEvent onThrow = new ();
+    [Group("ev"), SerializeField] private ThrowEvent onThrow = new ();
     public event UnityAction<Vector2> OnThrow { add => onThrow.AddListener(value); remove => onThrow.RemoveListener(value); }
-    [SerializeField]
+    [Group("ev"), SerializeField]
     private ThrowEvent onValueChanged = new ();
     public event UnityAction<Vector2> OnValueChanged { add => onValueChanged.AddListener(value); remove => onValueChanged.RemoveListener(value); }
 

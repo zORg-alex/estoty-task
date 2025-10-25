@@ -1,4 +1,5 @@
-﻿using System.Collections;
+﻿using System;
+using System.Collections;
 using Scripts.Extensions;
 using TriInspector;
 using UnityEditor.EditorTools;
@@ -10,7 +11,6 @@ using UnityEngine;
 public class ThrowMechanic : MonoBehaviour
 {
 	[SerializeField, Required] private Rigidbody ballPrefab;
-	[SerializeField] private Vector3 ballInitialPosition;
 	private Vector2 _throwValue;
 	private Rigidbody ball;
 	[SerializeField] private float fullThrowForce = 3f;
@@ -41,56 +41,26 @@ public class ThrowMechanic : MonoBehaviour
 	private IEnumerator Throw()
 	{
 		ball.isKinematic = false;
-		ball.AddForce(-_throwValue.x * fullThrowForce, _throwValue.magnitude * fullThrowVerticalForce, -_throwValue.y * fullThrowForce);
+		ball.AddForce(GetThrowForce());
 		ball = null;
 		yield return new WaitForSeconds(1f);
 
 		SpawnNewBall();
 	}
 
+	public Vector3 GetThrowForce()
+	{
+		return new(
+			-_throwValue.x * fullThrowForce,
+			_throwValue.magnitude * fullThrowVerticalForce,
+			-_throwValue.y * fullThrowForce
+			);
+	}
+
 	private void SpawnNewBall()
 	{
 		ball = Instantiate(ballPrefab);
-		ball.transform.position = ballInitialPosition;
+		ball.transform.position = transform.position;
 		ball.isKinematic = true;
 	}
-
-
-#if UNITY_EDITOR
-	
-	[EditorTool("Origin", typeof(ThrowMechanic))]
-	class InnerBoundsTool : LocalEditorTool<ThrowMechanic>
-	{
-		protected override GUIContent GetIcon() => EditorGUIUtility.IconContent("Transform Icon", "Edit Origin");
-
-		protected override void WhileEdited()
-		{
-			
-			var pos = Handles.DoPositionHandle(_script.ballInitialPosition,
-				Quaternion.identity);
-
-			if (_script.ballInitialPosition != pos)
-			{
-				Undo.RecordObject(target, "Move ballInitialPosition");
-				_script.ballInitialPosition = pos;
-			}
-		}
-
-		protected override void DrawHandles()
-		{
-			Handles.DrawWireDisc(_script.ballInitialPosition, Vector3.up, HandleUtility.GetHandleSize(_script.ballInitialPosition) * .2f);
-		}
-	}
-
-	[CustomEditor(typeof(ThrowMechanic))]
-	public class ThrowMechanicInspector : Editor
-	{
-		public override void OnInspectorGUI()
-		{
-			EditorGUILayout.EditorToolbarForTarget(EditorGUIUtility.TrTempContent("Edit Origin"), this);
-			GUILayout.Space(5);
-			this.DrawDefaultInspector();
-		}
-	}
-#endif
 }
