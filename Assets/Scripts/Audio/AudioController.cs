@@ -3,7 +3,7 @@
 using System;
 using PrimeTween;
 using Scripts.Extensions;
-using Sirenix.OdinInspector;
+using TriInspector;
 using UnityEngine;
 using UnityEngine.Audio;
 namespace Scripts.Audio

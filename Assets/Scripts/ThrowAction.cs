@@ -16,6 +16,10 @@ public class ThrowAction : MonoBehaviour
     [SerializeField] private float zeroSpeedThreshold = .5f; // speed (units/sec) toward zero considered "fast" (onscreen)
     [SerializeField] private ThrowEvent onThrow = new ();
     public event UnityAction<Vector2> OnThrow { add => onThrow.AddListener(value); remove => onThrow.RemoveListener(value); }
+    [SerializeField]
+    private ThrowEvent onValueChanged = new ();
+    public event UnityAction<Vector2> OnValueChanged { add => onValueChanged.AddListener(value); remove => onValueChanged.RemoveListener(value); }
+
     
     private void Start() => Initialize();
     private void Initialize()
@@ -52,15 +56,23 @@ public class ThrowAction : MonoBehaviour
                 Throw(apogee);
                 apogee = Vector2.zero;
             }
+            else
+            {
+                UpdateValue(stickValue);
+            }
             
             lastValue = stickValue;
             yield return null;
         }
     }
 
+    private void UpdateValue(Vector2 value)
+    {
+        onValueChanged.Invoke(value);
+    }
+
     private void Throw(Vector2 value)
     {
         onThrow.Invoke(value);
-        Debug.Log($"Throw {value} magnitude: {value.magnitude}");
     }
 }
