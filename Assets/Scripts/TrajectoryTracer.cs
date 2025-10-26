@@ -44,9 +44,4 @@ public class TrajectoryTracer : MonoBehaviour
 		_hide = true;
 		trajectoryVisual.gameObject.SetActive(false);
 	}
-
-	private void Update()
-	{
-		
-	}
 }

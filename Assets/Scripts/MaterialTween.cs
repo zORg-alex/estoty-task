@@ -44,7 +44,7 @@ public class MaterialTween : MonoBehaviour
     protected Tween TweenPropertyBlock(Color start, Color end) =>
         Tween.Custom(start, end, settings, SetColor).OnComplete(OnAfterTweening);
 
-    private void SetColor(Color color)
+    public void SetColor(Color color)
     {
         _mpb.SetColor(ColorProp, color);
         renderer.SetPropertyBlock(_mpb, 0);

@@ -4,32 +4,35 @@ using System.Linq;
 using Scripts.Extensions;
 using TriInspector;
 using UnityEngine;
+using UnityEngine.Events;
 using UnityEngine.Serialization;
 using Random = UnityEngine.Random;
 
 [DeclareFoldoutGroup("ref", Title = "References")]
 [ExecuteAlways, SelectionBase]
-public class GridController : MonoBehaviour
+public class HexGrid : MonoBehaviour
 {
     [Group("ref"), SerializeField] private Transform emptyPrefab;
     [Group("ref"), SerializeField] private Hole holePrefab;
 
-    [FormerlySerializedAs("hexSize"),SerializeField] private Vector2 cellOffset = new(1f, 1.155f);
+    [SerializeField] private Vector2 cellOffset = new(1f, 1.155f);
     [SerializeField] private int holeCount = 3;
     [SerializeField] private Vector2Int gridSize = new(5, 5);
     private List<HoleCache> _holes = new();
     private List<HexCache> _hexes = new();
     private List<HoleCache> _holePool = new();
     private List<HexCache> _hexesPool = new();
+    private bool _initialized = false;
     
     
-
     private void Start() => Initialize();
     private void OnEnable() => this.OnAssemblyReload(Initialize);
 
     [Button]
     private void Initialize()
     {
+        if (_initialized) return;
+        
         _holes.Clear();
         _hexes.Clear();
         var transformChildCount = transform.childCount;
@@ -37,14 +40,32 @@ public class GridController : MonoBehaviour
         {
             var t = transform.GetChild(i);
             if (t.TryGetComponent(out Hole h))
-                _holes.Add(new(h.gameObject, t, h, CalculateFromPosition(t)));
+            {
+                if (t.gameObject.activeSelf)
+                {
+                    h.SetID(_holes.Count);//id starts at 0
+                    _holes.Add(new(h.gameObject, t, h, CalculateFromPosition(t)));
+                }
+                else
+                    _holePool.Add(new(h.gameObject, t, h, CalculateFromPosition(t)));
+            }
             else
-                _hexes.Add(new(t.gameObject, t, CalculateFromPosition(t)));
+            {
+                if (t.gameObject.activeSelf)
+                    _hexes.Add(new(t.gameObject, t, CalculateFromPosition(t)));
+                else
+                    _hexesPool.Add(new(t.gameObject, t, CalculateFromPosition(t)));
+            }
         }
     }
 
+    private void OnDisable()
+    {
+        _initialized = false;
+    }
+
     [Button]
-    private void Generate()
+    public void Generate()
     {
         int missingHoles = holeCount - _holes.Count;
         for (int i = 0; i < missingHoles; i++)
@@ -202,5 +223,29 @@ public class GridController : MonoBehaviour
         GameObject GameObject { get; }
         Transform Transform { get; }
         Vector2Int Position { get; }
+    }
+
+    public void SubscribeHoles(UnityAction<int> onBallScored, UnityAction<int> onFail)
+    {
+        foreach (var hole in _holes)
+        {
+            hole.Hole.OnBallScored += onBallScored;
+            hole.Hole.OnFail += onFail;
+        }
+    }
+
+    public void UnsubscribeHoles(UnityAction<int> onBallScored, UnityAction<int> onFail)
+    {
+        foreach (var hole in _holes)
+        {
+            hole.Hole.OnBallScored += onBallScored;
+            hole.Hole.OnFail += onFail;
+        }
+    }
+
+    public Hole[] GetHoles()
+    {
+        if (!_initialized) Initialize();
+        return _holes.Select(c => c.Hole).ToArray();
     }
 }
