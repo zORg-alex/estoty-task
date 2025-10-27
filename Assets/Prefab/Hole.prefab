@@ -139,19 +139,7 @@ MonoBehaviour:
       m_Calls: []
   onFail:
     m_PersistentCalls:
-      m_Calls:
-      - m_Target: {fileID: 584278533412328496}
-        m_TargetAssemblyTypeName: UnityEngine.ParticleSystem, UnityEngine
-        m_MethodName: Play
-        m_Mode: 6
-        m_Arguments:
-          m_ObjectArgument: {fileID: 0}
-          m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
-          m_IntArgument: 0
-          m_FloatArgument: 0
-          m_StringArgument: 
-          m_BoolArgument: 1
-        m_CallState: 2
+      m_Calls: []
   _scoreEffectPrefab: {fileID: 8771972552311404736, guid: bbf9e36a48d6c5648a13889afab076fd,
     type: 3}
   _appearEffectPrefab: {fileID: 141433446842962274, guid: 9fe8f8b3288e45a44af36ff8aa04486e,
@@ -370,12 +358,6 @@ PrefabInstance:
 --- !u!4 &584278533412328462 stripped
 Transform:
   m_CorrespondingSourceObject: {fileID: 141433446842962274, guid: 9fe8f8b3288e45a44af36ff8aa04486e,
-    type: 3}
-  m_PrefabInstance: {fileID: 715437662554719596}
-  m_PrefabAsset: {fileID: 0}
---- !u!198 &584278533412328496 stripped
-ParticleSystem:
-  m_CorrespondingSourceObject: {fileID: 141433446842962268, guid: 9fe8f8b3288e45a44af36ff8aa04486e,
     type: 3}
   m_PrefabInstance: {fileID: 715437662554719596}
   m_PrefabAsset: {fileID: 0}
