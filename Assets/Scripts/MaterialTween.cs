@@ -1,17 +1,41 @@
 ﻿using System;
+using System.Collections.Generic;
 using PrimeTween;
 using Scripts.Extensions;
+using TriInspector;
 #if UNITY_EDITOR
 using UnityEditor;
 #endif
 using UnityEngine;
 using UnityEngine.Events;
-using UnityEngine.Serialization;
-using UnityEngine.UI;
 
-public class MaterialTween : MonoBehaviour
+public class MaterialTween : MonoBehaviour, IMaterialTween
 {
     private static readonly int ColorProp = Shader.PropertyToID("_BaseColor");
+    public enum Property
+    {
+        BaseColor=560,
+        Color = 181,
+        EmissionColor = 69,
+        SpecColor = 443,
+    }
+
+    // public List<Prop> PropList;
+    // [Serializable]
+    // public class Prop
+    // {
+    //     public string str;
+    //     public int id;
+    //     
+    // }
+    // [Button]
+    // public void UpdateProps()
+    // {
+    //     for (int i = 0; i < PropList.Count; i++)
+    //     {
+    //         PropList[i].id = Shader.PropertyToID(PropList[i].str);
+    //     }
+    // }
 
     [SerializeField] protected TweenSettings settings;
     [SerializeField] private new Renderer renderer;
@@ -36,7 +60,7 @@ public class MaterialTween : MonoBehaviour
         SetColor(currentColor);
     }
 
-    virtual public void StartTweeningTo(Color color)
+    public virtual void StartTweenTo(Color color)
     {
         TweenPropertyBlock(currentColor, color);
     }
@@ -47,6 +71,12 @@ public class MaterialTween : MonoBehaviour
     public void SetColor(Color color)
     {
         _mpb.SetColor(ColorProp, color);
+        renderer.SetPropertyBlock(_mpb, 0);
+    }
+
+    public void SetMaterialProperty(Color color, Property property)
+    {
+        _mpb.SetColor((int)property, color);
         renderer.SetPropertyBlock(_mpb, 0);
     }
 
@@ -68,14 +98,20 @@ public class MaterialTween : MonoBehaviour
             {
                 if (GUILayout.Button("Tween to blue"))
                 {
-                    (target as MaterialTween)?.StartTweeningTo(Color.blue);
+                    (target as MaterialTween)?.StartTweenTo(Color.blue);
                 }
                 if (GUILayout.Button("Tween to red"))
                 {
-                    (target as MaterialTween)?.StartTweeningTo(Color.red);
+                    (target as MaterialTween)?.StartTweenTo(Color.red);
                 }
             }
         }
     }
 #endif
+}
+
+public interface IMaterialTween
+{
+    public void StartTweenTo(Color color);
+    public void SetColor(Color color);
 }

@@ -79,11 +79,10 @@ public class GameMechanic : MonoBehaviour
 	{
 		_lastFlipTime = Time.timeSinceLevelLoad;
 		var hole = _holes[UnityEngine.Random.Range(0, _holes.Length)];
-		if (_holes.Count(h=>h.isGood) <= 1 && hole.isGood)
-			hole = _holes.First(h => !h.isGood);
+		if (_holes.Count(h=>(h.isGood && !h.isTweening) || (!h.isGood && h.isTweening)) <= 1 && hole.isGood)
+			hole = _holes.FirstOrDefault(h => !h.isGood && !h.isTweening);
 			
-
-		hole.Flip();
+		hole?.Flip();
 	}
 
 	public void Throwing() => _canFlipHoles = false;

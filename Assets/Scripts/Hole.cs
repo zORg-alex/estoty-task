@@ -1,5 +1,6 @@
 using System;
 using System.Collections;
+using Cysharp.Threading.Tasks;
 using Scripts.Extensions;
 using TriInspector;
 using UnityEngine;
@@ -7,8 +8,7 @@ using UnityEngine.Events;
 
 public class Hole : MonoBehaviour
 {
-	private MaterialTween _tween;
-	[SerializeField] private float delayToBallDestruction = 2f;
+	private IMaterialTween _tween;
 	[SerializeField]
 	private UnityEventInt onBallScored = new ();
 	public event UnityAction<int> OnBallScored { add => onBallScored.AddListener(value); remove => onBallScored.RemoveListener(value); }
@@ -20,18 +20,24 @@ public class Hole : MonoBehaviour
 	[SerializeField] private Color badColor = Color.brown;
 	
 	private bool _isGood = true;
+	private bool _isTweening = false;
 	public bool isGood => _isGood;
+	public bool isTweening => _isTweening;
 	private int _id;
 
 	private void Start() => Initialize();
 	private void OnEnable() => this.OnAssemblyReload(Initialize);
 
-	private void Initialize()
+	private void Initialize() => InitializeAsync().Forget();
+
+	private async UniTaskVoid InitializeAsync()
 	{
+
 #if UNITY_EDITOR
 		onFail.RemoveAllListeners();
 		onBallScored.RemoveAllListeners();
 #endif
+		await UniTask.Yield();
 		TryGetComponent(out _tween);
 		_tween.SetColor(goodColor);
 	}
@@ -46,13 +52,15 @@ public class Hole : MonoBehaviour
 	
 	public void Flip()
 	{
-		if (!_tween) Debug.LogError("_tween not found", this);
-		_tween.StartTweeningTo(_isGood ? badColor : goodColor);
+		if (_tween == null) Debug.LogError("_tween not found", this);
+		_tween?.StartTweenTo(_isGood ? badColor : goodColor);
+		_isTweening = true;
 	}
 
 	public void FlipFinished()
 	{
 		_isGood = !_isGood;
+		_isTweening = false;
 	}
 	
 	public void SetID(int id) => _id = id;
