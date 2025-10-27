@@ -148,6 +148,7 @@ public class HexGrid : MonoBehaviour
             _hexes[hexInd] = hex.WithPosition(h.Position);
             Position(h.Transform, pos);
             _holes[ind] = h.WithPosition(pos);
+            _holes[ind].Hole.JustMoved();
         }
     }
 

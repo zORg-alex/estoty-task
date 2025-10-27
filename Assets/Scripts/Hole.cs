@@ -16,6 +16,10 @@ public class Hole : MonoBehaviour
 	private UnityEventInt onFail = new ();
 	public event UnityAction<int> OnFail { add => onFail.AddListener(value); remove => onFail.RemoveListener(value); }
 
+	[SerializeField] private Transform _scoreEffectPrefab;
+	[SerializeField] private Transform _appearEffectPrefab;
+	[SerializeField] private Transform _failEffectPrefab;
+	
 	[SerializeField] private Color goodColor = Color.cornflowerBlue;
 	[SerializeField] private Color badColor = Color.brown;
 	
@@ -45,9 +49,17 @@ public class Hole : MonoBehaviour
 	public void OnBallDetected(Collider other)
 	{
 		if (_isGood)
+		{
+			if (_scoreEffectPrefab)
+				Instantiate(_scoreEffectPrefab, transform.position, Quaternion.identity);
 			onBallScored.Invoke(_id);
+		}
 		else
+		{
+			if (_failEffectPrefab)
+				Instantiate(_failEffectPrefab, transform.position, Quaternion.identity);
 			onFail.Invoke(_id);
+		}
 	}
 	
 	public void Flip()
@@ -64,4 +76,10 @@ public class Hole : MonoBehaviour
 	}
 	
 	public void SetID(int id) => _id = id;
+
+	public void JustMoved()
+	{
+		if (_appearEffectPrefab)
+			Instantiate(_appearEffectPrefab, transform.position, Quaternion.identity);
+	}
 }
