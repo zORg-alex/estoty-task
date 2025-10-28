@@ -1,4 +1,5 @@
-﻿using UnityEngine;
+﻿using System;
+using UnityEngine;
 using Scripts.Input;
 using Scripts.Extensions;
 using UnityEngine.Events;
@@ -9,6 +10,11 @@ namespace Scripts.UI
 {
 	public class MenuView : UIContext, IInputBack, IInputEsc
 	{
+		private Action _onShow = () => { };
+		private Action _onHide = () => { };
+		public event Action OnShowEvent { add => _onShow += value; remove => _onShow -= value; }
+		public event Action OnHideEvent { add => _onHide += value; remove => _onHide -= value; }
+		
 		private static MenuView _instance;
 		public static MenuView Instance => Singletons.GetOrCreateInstanceInScene(ref _instance);
 		protected override void OnInitialize()
@@ -24,16 +30,23 @@ namespace Scripts.UI
         }
 
 		public virtual void OnBack() => Hide();
-		public virtual void OnEsc() => Hide();
+		public virtual void OnEsc()
+		{
+			if (Interactable)
+				Hide();
+			else
+				Show();
+		}
 
 		public override void OnShow()
 		{
 			InputSystem.Instance.FocusedContext = gameObject;
+			_onShow.Invoke();
 		}
 
 		public override void OnHide()
 		{
-			
+			_onHide.Invoke();
 		}
 
 		public void ApplicationQuit()

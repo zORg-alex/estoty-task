@@ -239,8 +239,8 @@ public class HexGrid : MonoBehaviour
     {
         foreach (var hole in _holes)
         {
-            hole.Hole.OnBallScored += onBallScored;
-            hole.Hole.OnFail += onFail;
+            hole.Hole.OnBallScored -= onBallScored;
+            hole.Hole.OnFail -= onFail;
         }
     }
 

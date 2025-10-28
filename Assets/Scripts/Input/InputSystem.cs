@@ -12,6 +12,7 @@ using UnityEngine.InputSystem;
 namespace Scripts.Input
 {
 	[DeclareFoldoutGroup("ev", Title = "Events")]
+	[DefaultExecutionOrder(100)]
 	[ExecuteAlways]
 	public class InputSystem : MonoBehaviour
 	{
@@ -40,7 +41,10 @@ namespace Scripts.Input
 
 		private void Initialize()
 		{
-
+			refEscAction?.action.Enable();
+			refBackAction?.action.Enable();
+			refNextAction?.action.Enable();
+			refPrevAction?.action.Enable();
 		}
 
 		private void OnDisable()

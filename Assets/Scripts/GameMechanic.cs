@@ -3,6 +3,7 @@ using System.Collections;
 using System.Linq;
 using Scripts.Audio;
 using Scripts.Extensions;
+using Scripts.UI;
 using TriInspector;
 using Unity.VisualScripting;
 using UnityEngine;
@@ -35,14 +36,16 @@ public class GameMechanic : MonoBehaviour
 	private float _timer;
 	private int _score;
 	private float _lastFlipTime;
-	private bool _canFlipHoles;
+	private bool _canFlipHoles = true;
 	private Hole[] _holes;
 
 
 	private IEnumerator Start()
 	{
+		_score = 0;
+		_timer = baseGameTime;
 		yield return null;
-		Initialize();
+		yield return Initialize();
 	}
 
 	private void OnEnable()
@@ -54,15 +57,29 @@ public class GameMechanic : MonoBehaviour
 #endif
 	}
 
-	private void Initialize()
+	private IEnumerator Initialize()
 	{
 		grid.UnsubscribeHoles(OnBallScored, OnFail);
+		grid.SubscribeHoles(OnBallScored, OnFail);
 		_holes = grid.GetHoles();
 
-		_score = 0;
-		_timer = baseGameTime;
 		onScoreChanged.Invoke(_score);
 		AudioController.Instance.PlayMusic(musicByIntensity[_currentIntensity]);
+		
+		MenuView.Instance?.Hide();
+		yield return null;
+		MenuView.Instance.OnHideEvent += ResumeGame;
+		MenuView.Instance.OnShowEvent += PauseGame;
+	}
+
+	public void PauseGame()
+	{
+		Time.timeScale = 0f;
+	}
+
+	public void ResumeGame()
+	{
+		Time.timeScale = 1f;
 	}
 
 	private void OnDisable()
@@ -132,6 +149,21 @@ public class GameMechanic : MonoBehaviour
 	
 	private void EndGame()
 	{
-		
+		// PauseGame();
+		_timer = 0f;
+		onTimerChanged.Invoke(TimeSpan.FromSeconds(_timer));
+		enabled = false;
+
+		EndgameContext.Instance.ShowScore(_score, ResetGame);
+	}
+
+	private void ResetGame()
+	{
+		enabled = true;
+		_score = 0;
+		_timer = baseGameTime;
+		onTimerChanged.Invoke(TimeSpan.FromSeconds(_timer));
+		onScoreChanged.Invoke(_score);
+		grid.Generate();
 	}
 }

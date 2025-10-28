@@ -31,6 +31,10 @@ namespace Scripts.Audio
     	private void OnEnable()
     	{
     		if (this.OnEnableDestroyIfCopy(ref _instance)) return;
+			SetMasterVolume(GetMasterVolume());
+			SetMusicVolume(GetMusicVolume());
+			SetUIVolume(GetUIVolume());
+			SetSFXVolume(GetSFXVolume());
     	}
 
     	public  void PlayUIClip(AudioClip clip)
