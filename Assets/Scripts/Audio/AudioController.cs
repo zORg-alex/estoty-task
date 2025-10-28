@@ -38,7 +38,7 @@ namespace Scripts.Audio
     		_uiAudioSource.clip = clip;
     		_uiAudioSource.Play();
     	}
-    	public void PlayMusic(AudioClip music, bool loop = true, float duration = 3f)
+    	public void PlayMusic(AudioClip music, bool loop = true, float duration = 3f, bool syncTime = false)
     	{
             if (_musicAudioSource.Length == 0) { Debug.LogError("MusicSources Missing"); return; }
             int lastInd = _lastMusicSourceId++ % _musicAudioSource.Length;
@@ -47,11 +47,13 @@ namespace Scripts.Audio
                 Tween.AudioVolume(_musicAudioSource[lastInd], 0f, duration);
             _musicAudioSource[ind].loop = loop;
             _musicAudioSource[ind].clip = music;
+			if (syncTime)
+				_musicAudioSource[ind].time = _musicAudioSource[lastInd].time;
             _musicAudioSource[ind].Play();
 			if (_musicAudioSource[ind].volume < 1f)
 				Tween.AudioVolume(_musicAudioSource[ind], 1f, duration);
         }
-
+		
     	internal void StopMusic(float duration = 3f)
     	{
     		int ind = _lastMusicSourceId % _musicAudioSource.Length;

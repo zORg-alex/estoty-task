@@ -3,5 +3,6 @@
 namespace Sirenix.OdinInspector
 {
 
-	internal class RequiredAttribute : Attribute { }
+	internal class RequiredAttribute : TriInspector.RequiredAttribute { }
+	internal class ButtonAttribute : TriInspector.ButtonAttribute { }
 }

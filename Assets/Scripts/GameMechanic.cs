@@ -1,6 +1,7 @@
 ﻿using System;
 using System.Collections;
 using System.Linq;
+using Scripts.Audio;
 using Scripts.Extensions;
 using TriInspector;
 using Unity.VisualScripting;
@@ -17,6 +18,11 @@ public class GameMechanic : MonoBehaviour
 	[SerializeField] private float holeFlipTime = 5f;
 	[SerializeField] private float timerIncrement = 5f;
 	[SerializeField] private float timerDecrement = 10f;
+	[SerializeField] private float musicTransitionThreshold = 5f;
+	[SerializeField] private float[] musicIntensityTimerThreshold = new[] { 45f, 30f, 15f };
+	[SerializeField] private AudioClip[] musicByIntensity;
+	private int _currentIntensity;
+	private float _lastIntensityChange;
 	
 	[Group("ev"), SerializeField]
 	private UnityEventInt onScoreChanged = new ();
@@ -56,6 +62,7 @@ public class GameMechanic : MonoBehaviour
 		_score = 0;
 		_timer = baseGameTime;
 		onScoreChanged.Invoke(_score);
+		AudioController.Instance.PlayMusic(musicByIntensity[_currentIntensity]);
 	}
 
 	private void OnDisable()
@@ -71,6 +78,25 @@ public class GameMechanic : MonoBehaviour
 
 		if (_lastFlipTime + holeFlipTime < Time.timeSinceLevelLoad && _canFlipHoles)
 			FlipRandomHole();
+
+		if (Time.timeSinceLevelLoad > _lastIntensityChange + 6f)
+		{
+			var newIntensity = _currentIntensity;
+
+			if (_currentIntensity < musicIntensityTimerThreshold.Length - 1 &&
+				_timer < musicIntensityTimerThreshold[_currentIntensity] + musicTransitionThreshold)
+				newIntensity++;
+			else if (_currentIntensity > 0 && _timer > musicIntensityTimerThreshold[_currentIntensity] - musicTransitionThreshold)
+				newIntensity--;
+
+			if (newIntensity != _currentIntensity)
+			{
+				_currentIntensity = newIntensity;
+				AudioController.Instance.PlayMusic(musicByIntensity[_currentIntensity], duration: 3f, syncTime: true);
+				_lastIntensityChange = Time.timeSinceLevelLoad;
+				Debug.Log("Intensity: " + _currentIntensity);
+			}
+		}
 		
 		onTimerChanged.Invoke(TimeSpan.FromSeconds(_timer));
 	}

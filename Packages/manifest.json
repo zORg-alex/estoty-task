@@ -3,7 +3,7 @@
     "com.codewriter.triinspector": "https://github.com/codewriter-packages/Tri-Inspector.git",
     "com.kyrylokuzyk.primetween": "file:../Assets/Plugins/PrimeTween/internal/com.kyrylokuzyk.primetween.tgz",
     "com.unity.ai.navigation": "2.0.9",
-    "com.unity.cinemachine": "2.10.4",
+    "com.unity.cinemachine": "3.1.5",
     "com.unity.collab-proxy": "2.9.3",
     "com.unity.entities": "1.3.14",
     "com.unity.entities.graphics": "1.4.12",

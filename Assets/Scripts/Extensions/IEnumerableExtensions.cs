@@ -1,36 +1,61 @@
-
 using System;
 using System.Collections.Generic;
+using System.Diagnostics;
 
-public static class IEnumerableExtensions
+namespace Scripts.Extensions
 {
-	public static bool TryFind<T>(this IEnumerable<T> source, Func<T, bool> predicate, out T result)
+	public static class IEnumerableExtensions
 	{
-		foreach (T item in source)
+		[DebuggerStepThrough]
+		public static void ForEach<T>(this IEnumerable<T> enumerable, Action<T> action)
 		{
-			if (predicate(item))
+			foreach (var item in enumerable)
 			{
-				result = item;
-				return true;
+				action(item);
 			}
 		}
-		result = default(T);
-		return false;
-	}
-	public static bool TryFind<T>(this IEnumerable<T> source, Func<T, bool> predicate, out T result, out int index)
-	{
-		index = 0;
-		foreach (T item in source)
+
+		[DebuggerStepThrough]
+		public static void ForEach<T>(this IEnumerable<T> enumerable, Action<T, int> action)
 		{
-			if (predicate(item))
+			int i = 0;
+			foreach (var item in enumerable)
 			{
-				result = item;
-				return true;
+				action(item, i++);
+			}
+		}
+
+		public static bool TryFind<T>(this IEnumerable<T> source, Func<T, bool> predicate, out T result)
+		{
+			foreach (T item in source)
+			{
+				if (predicate(item))
+				{
+					result = item;
+					return true;
+				}
 			}
 
-			index++;
+			result = default(T);
+			return false;
 		}
-		result = default(T);
-		return false;
+
+		public static bool TryFind<T>(this IEnumerable<T> source, Func<T, bool> predicate, out T result, out int index)
+		{
+			index = 0;
+			foreach (T item in source)
+			{
+				if (predicate(item))
+				{
+					result = item;
+					return true;
+				}
+
+				index++;
+			}
+
+			result = default(T);
+			return false;
+		}
 	}
 }
