@@ -1,3 +1,4 @@
+#if UNITY_EDITOR
 using UnityEditor;
 using UnityEditor.EditorTools;
 using UnityEngine;
@@ -59,3 +60,4 @@ namespace Scripts.Extensions
 		protected abstract GUIContent GetIcon();
 	}
 }
+#endif

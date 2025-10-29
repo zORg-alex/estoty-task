@@ -18,16 +18,17 @@ namespace Scripts.MainSystems
 	/// </summary>
 	public class MainSceneController : MonoBehaviour
 	{
-		private static Scene _menuScene;
 		private static AsyncOperation _loadScene;
-		private static bool _primaryLoad;
-		public static bool IsPrimarilyLoaded => _primaryLoad;
 
 #if UNITY_EDITOR
+		private static Scene _menuScene;
+
 		[InitializeOnLoadMethod]
 		private static void InitializeEditorOnLoad()
 		{
+			EditorSceneManager.activeSceneChangedInEditMode -= EditorSceneManager_activeSceneChangedInEditMode;
 			EditorSceneManager.activeSceneChangedInEditMode += EditorSceneManager_activeSceneChangedInEditMode;
+
 			void EditorSceneManager_activeSceneChangedInEditMode(Scene a, Scene b)
 			{
 				if (b.buildIndex == 0) return;
@@ -38,6 +39,7 @@ namespace Scripts.MainSystems
 					var scene = SceneManager.GetSceneAt(i);
 					if (scene.buildIndex == 0) _menuScene = scene;
 				}
+
 				if (!_menuScene.isLoaded)
 				{
 					var scene = EditorBuildSettings.scenes[0];
@@ -46,19 +48,18 @@ namespace Scripts.MainSystems
 			}
 		}
 #endif
-
 		[RuntimeInitializeOnLoadMethod(RuntimeInitializeLoadType.AfterSceneLoad)]
-		public static void AfterSceneLoadInitizlize()
+		public static void InitializePlayOnLoad()
 		{
-			for (int i = 0; i < SceneManager.sceneCount; i++)
+			SceneManager.activeSceneChanged -= SceneManagerOnactiveSceneChanged;
+			SceneManager.activeSceneChanged += SceneManagerOnactiveSceneChanged;
+
+			void SceneManagerOnactiveSceneChanged(Scene a, Scene b)
 			{
-				var scene = SceneManager.GetSceneAt(i);
-				if (scene.buildIndex == 0) _menuScene = scene;
-			}
-			if (string.IsNullOrEmpty(_menuScene.name))
+				if (b.buildIndex == 0) return;
+
 				_loadScene = SceneManager.LoadSceneAsync(0, LoadSceneMode.Additive);
-			else
-				_primaryLoad = true;
+			}
 		}
 	}
 }

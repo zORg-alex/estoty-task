@@ -12,7 +12,7 @@ namespace Scripts.Audio
     public class AudioController : MonoBehaviour
     {
     	private static AudioController _instance;
-    	public static AudioController Instance => Singletons.GetOrFindByType(ref _instance);
+    	public static AudioController Instance => Singletons.GetOrCreateInstanceInScene(ref _instance);
     	[SerializeField][Required]
     	private AudioSource _uiAudioSource;
     	[SerializeField][Required]
