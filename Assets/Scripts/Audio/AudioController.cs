@@ -1,6 +1,7 @@
 ﻿//using Sirenix.OdinInspector;
 
 using System;
+using Cysharp.Threading.Tasks;
 using PrimeTween;
 using Scripts.Extensions;
 using TriInspector;
@@ -30,14 +31,20 @@ namespace Scripts.Audio
 
     	private void OnEnable()
     	{
-    		if (this.OnEnableDestroyIfCopy(ref _instance)) return;
+			//WTF? This doesn't work on first frame now?
+			UniTask.DelayFrame(1).ContinueWith(UpdateMixerValues).Forget();
+    	}
+
+		private void UpdateMixerValues()
+		{
+			if (this.OnEnableDestroyIfCopy(ref _instance)) return;
 			SetMasterVolume(GetMasterVolume());
 			SetMusicVolume(GetMusicVolume());
 			SetUIVolume(GetUIVolume());
 			SetSFXVolume(GetSFXVolume());
-    	}
+		}
 
-    	public  void PlayUIClip(AudioClip clip)
+		public  void PlayUIClip(AudioClip clip)
     	{
     		_uiAudioSource.clip = clip;
     		_uiAudioSource.Play();

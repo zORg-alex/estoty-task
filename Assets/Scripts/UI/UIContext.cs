@@ -1,4 +1,5 @@
-﻿using Scripts.Extensions;
+﻿using System;
+using Scripts.Extensions;
 using Sirenix.OdinInspector;
 using System.Diagnostics;
 using Scripts.Input;
@@ -28,7 +29,7 @@ namespace Scripts.UI
         }
 
         [SerializeField]
-		private Button[] backButtons;
+		private Button[] backButtons = Array.Empty<Button>();
 		protected UIContext PreviousContext;
 		protected bool LockedIn;
 

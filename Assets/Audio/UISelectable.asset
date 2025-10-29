@@ -12,5 +12,14 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 3561d42ad9db4402ae9c3ba1e449db68, type: 3}
   m_Name: UISelectable
   m_EditorClassIdentifier: Assembly-CSharp::SelectableSoundsSO
-  selected: []
-  clicked: []
+  selected:
+  - {fileID: 8300000, guid: 5fd39399328fbd0409dfd7a455b00d4f, type: 3}
+  clicked:
+  - {fileID: 8300000, guid: 484b48f516adfb5409b7a6251c0d0eab, type: 3}
+  - {fileID: 8300000, guid: 753f9167230381a4c827303e78a37592, type: 3}
+  - {fileID: 8300000, guid: b984d11f61e718e4da8aa3d0dedfe4b1, type: 3}
+  - {fileID: 8300000, guid: a7e149d833326b74c820f424d79a652c, type: 3}
+  - {fileID: 8300000, guid: 50e5ef1de33d5784f8c59a3e95c21513, type: 3}
+  - {fileID: 8300000, guid: 48e2918c4e2819243a41751e54db9759, type: 3}
+  - {fileID: 8300000, guid: c0969835040673a429ec89a4249fc3c6, type: 3}
+  - {fileID: 8300000, guid: 13eeef47813a5b443bb783c7d3307181, type: 3}
