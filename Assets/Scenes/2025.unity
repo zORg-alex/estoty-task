@@ -6110,6 +6110,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: Assembly-CSharp::GridMechanic
   grid: {fileID: 823027184}
+  throwMechanic: {fileID: 1527832671}
   baseGameTime: 30
   holeFlipTime: 6
   timerIncrement: 5

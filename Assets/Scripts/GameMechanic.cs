@@ -14,6 +14,7 @@ using UnityEngine.Serialization;
 public class GameMechanic : MonoBehaviour
 {
 	[SerializeField, Required] private HexGrid grid;
+	[SerializeField, Required] private ThrowMechanic throwMechanic;
 
 	[SerializeField] private float baseGameTime = 30f;
 	[SerializeField] private float holeFlipTime = 5f;
@@ -50,6 +51,9 @@ public class GameMechanic : MonoBehaviour
 
 	private void OnEnable()
 	{
+		if (!grid) Singletons.GetOrCreateInstanceInScene(ref grid);
+		if (!throwMechanic) Singletons.GetOrCreateInstanceInScene(ref throwMechanic);
+		
 		this.OnAssemblyReload(Initialize);
 #if UNITY_EDITOR
 		grid.UnsubscribeHoles(OnBallScored, OnFail);
@@ -165,5 +169,7 @@ public class GameMechanic : MonoBehaviour
 		onTimerChanged.Invoke(TimeSpan.FromSeconds(_timer));
 		onScoreChanged.Invoke(_score);
 		grid.Generate();
+		_holes = grid.GetHoles();
+		throwMechanic.ResetBalls();
 	}
 }

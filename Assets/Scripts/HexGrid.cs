@@ -82,6 +82,9 @@ public class HexGrid : MonoBehaviour
             _holes.RemoveAt(_holes.Count - 1);
         }
 
+        foreach (var h in _holes) h.Hole.ResetColor();
+        foreach (var h in _holePool) h.Hole.ResetColor();
+
         var hexesMissing = gridSize.x * gridSize.y - _hexes.Count - holeCount;
         for (int i = 0; i < hexesMissing; i++)
         {

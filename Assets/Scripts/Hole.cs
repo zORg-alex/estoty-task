@@ -1,6 +1,7 @@
 using System;
 using System.Collections;
 using Cysharp.Threading.Tasks;
+using PrimeTween;
 using Scripts.Extensions;
 using TriInspector;
 using UnityEngine;
@@ -81,5 +82,13 @@ public class Hole : MonoBehaviour
 	{
 		if (_appearEffectPrefab)
 			Instantiate(_appearEffectPrefab, transform.position, Quaternion.identity);
+	}
+
+	public void ResetColor()
+	{
+		_tween?.SetColor(goodColor);
+		Tween.StopAll(gameObject);
+		_isGood = true;
+		_isTweening = false;
 	}
 }

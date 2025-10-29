@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Collections;
+using System.Collections.Generic;
 using Scripts.Extensions;
 using TriInspector;
 using UnityEditor.EditorTools;
@@ -13,6 +14,7 @@ public class ThrowMechanic : MonoBehaviour
 	[SerializeField, Required] private Rigidbody ballPrefab;
 	private Vector2 _throwValue;
 	private Rigidbody ball;
+	private List<GameObject> balls = new();
 	[SerializeField] private float fullThrowForce = 3f;
 	[SerializeField] private float fullThrowVerticalForce = 2f;
 
@@ -42,10 +44,24 @@ public class ThrowMechanic : MonoBehaviour
 	{
 		ball.isKinematic = false;
 		ball.AddForce(GetThrowForce());
+		AddBall(ball.gameObject);
 		ball = null;
 		yield return new WaitForSeconds(1f);
 
 		SpawnNewBall();
+	}
+
+	private void AddBall(GameObject gameObject)
+	{
+		for (int i = 0; i < balls.Count; i++)
+		{
+			if (!balls[i])
+			{
+				balls[i] = gameObject;
+				return;
+			}
+		}
+		balls.Add(gameObject);
 	}
 
 	public Vector3 GetThrowForce()
@@ -62,5 +78,14 @@ public class ThrowMechanic : MonoBehaviour
 		ball = Instantiate(ballPrefab);
 		ball.transform.position = transform.position;
 		ball.isKinematic = true;
+	}
+
+	public void ResetBalls()
+	{
+		foreach (var b in balls)
+		{
+			Destroy(b);
+		}
+		balls.Clear();
 	}
 }

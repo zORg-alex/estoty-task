@@ -13,11 +13,8 @@ namespace Scripts.UI
 
 		[SerializeField] private TextProvider text;
 		private Action _onHidden;
-		
-		private void Start() => Initialize();
-		private void OnEnable() => this.OnAssemblyReload(Initialize);
 
-		private void Initialize()
+		protected override void OnInitialize()
 		{
 			if (this.OnEnableDestroyIfCopy(ref _instance)) return;
 			this.RegisterInInputBack();
