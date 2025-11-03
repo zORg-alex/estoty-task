@@ -54,6 +54,9 @@ namespace Scripts.UI
 
 		private void UpdateButtonsVisibility()
 		{
+#if UNITY_EDITOR
+			if (!Application.isPlaying) return;
+#endif
 			if (LevelSelector.Instance.NothingLoaded)
 			{
 				returnButton.gameObject.SetActive(false);
